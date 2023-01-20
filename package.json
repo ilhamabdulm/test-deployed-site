@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "lint": "eslint .",
+    "start": "tsc && vite build", 
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
