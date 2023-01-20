@@ -1,0 +1,20 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.border-r-1 {
+    border-right-width: 1px;
+}
+
+.border-b-1 {
+    border-bottom-width: 1px;
+}
+
+.year::-webkit-scrollbar {
+    width: 0px;
+  }
+   .year:focus{
+    outline:none !important;
+  }
+  
