@@ -1,0 +1,40 @@
+image: node:18.7.0
+clone:
+  depth: full
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: 
+          # This gets executed on every push by a developer
+          - npm install
+          - npm test
+  branches:
+    development:
+      - step:
+          caches:
+            - node
+          script:
+            - npm install
+            - # npm test
+            - npm run dev # build:production # or your build cmd for dev
+            - git add -A
+            - git config --global user.email "bbpipeline@pipe.com"
+            - git config --global user.name "Pipe Prod User"
+            - git commit -m "production build"
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_STAGING_APP_NAME.git master
+    master:
+      - step:
+          caches:
+            - node 
+          script:
+            # This gets executed when merging a PR to master branch sdaf
+            - npm install
+            - # npm test
+            - npm run build
+            - git add -A
+            - git config --global user.email "bbpipeline@pipe.com"
+            - git config --global user.name "Pipe Prod User"
+            - git commit -m "production build"
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
