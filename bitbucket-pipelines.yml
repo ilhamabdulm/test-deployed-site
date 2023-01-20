@@ -10,7 +10,6 @@ pipelines:
           # This gets executed on every push by a developer
           - npm install
           - npm test
- image: node:10.15.3pipelines:
   branches:
     master:
       - step:
