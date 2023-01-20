@@ -31,6 +31,8 @@ pipelines:
           script:
             # This gets executed when merging a PR to master branch sdaf
             - npm install
+            - npm i --save-dev @types/react-dom
+            - npm i type-fest
             - # npm test
             - npm run build
             - git add -A
