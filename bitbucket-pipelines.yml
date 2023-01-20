@@ -20,18 +20,18 @@ pipelines:
             - rm -rf package-lock.json
             - rm -rf node_modules
             - npm install
-       - step:
-           name: Create artifact
-           script: 
+      - step:
+          name: Create artifact
+          script: 
              - git archive --format=tar.gz master -o application.tar.gz 
-         artifacts: 
+          artifacts: 
            - application.tar.gz
-       - step:
-           name: Deploy to heroku
-           deployment: production
-           caches:
+      - step:
+          name: Deploy to heroku
+          deployment: production
+          caches:
              - node
-           script:
+          script:
              - pipe: atlassian/heroku-deploy:1.1.4
                variables:
                  HEROKU_API_KEY: $HEROKU_API_KEY
