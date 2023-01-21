@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "lint": "eslint .",
-    "start": "tsc && vite build",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
@@ -29,7 +28,7 @@
   "devDependencies": {
     "@types/react": "^18.0.26",
     "@types/react-date-range": "^1.4.4",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "@vitejs/plugin-react": "^3.0.0",
@@ -45,7 +44,7 @@
     "prettier": "2.8.1",
     "prettier-plugin-packagejson": "^2.3.0",
     "tailwindcss": "^3.2.4",
-    "type-fest": "^3.5.2",
+    "type-fest": "^3.5.1",
     "typescript": "^4.9.3",
     "vite": "^4.0.0"
   },
