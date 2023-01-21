@@ -8,7 +8,7 @@ pipelines:
           - node
         script: 
           # This gets executed on every push by a developer
-          - npm ci
+          - npm i
           - npm test
   branches:
     master:
