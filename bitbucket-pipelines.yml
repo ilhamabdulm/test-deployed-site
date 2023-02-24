@@ -9,7 +9,6 @@ pipelines:
         script:
           - npm install
           - npm run build
-          - echo "web: npm run start" > Procfile
           - git add .
           - git commit -m "Add Procfile for Heroku deployment"
           - git archive --format=tar.gz HEAD > application.tar.gz
