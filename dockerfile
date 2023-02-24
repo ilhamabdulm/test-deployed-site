@@ -2,24 +2,50 @@ FROM node:18.12.1
 
 WORKDIR /app
 
-# Setup a path for using local npm packages
-RUN mkdir -p /opt/node_modules
-
 COPY ./package.json /app
 COPY ./package-lock.json /app
 
 RUN npm ci
 
-COPY ./ /app
+# Build the application
+RUN npm run build
 
-RUN npm run client:build
-# server build needs to run after client build because the client build using Vite
-# removes the dist/ folder before compiling its code
-RUN npm run server:build
+# Copy built files from the build stage
+COPY ./dist/client /app
 
 EXPOSE 5173
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start", "--", "--host"]
+
+
+
+# This version works, but build the whole thing
+# FROM node:18.12.1
+
+# WORKDIR /app
+
+# # Setup a path for using local npm packages
+# RUN mkdir -p /opt/node_modules
+
+# COPY ./package.json /app
+# COPY ./package-lock.json /app
+
+# RUN npm ci
+
+# COPY ./ /app
+
+# RUN npm run build
+# # server build needs to run after client build because the client build using Vite
+# # removes the dist/ folder before compiling its code
+
+# EXPOSE 5173
+
+# CMD ["npm", "run", "start", "--", "--host"]
+
+
+
+
+
 
 # # Use an official Node.js runtime as the base image
 # FROM node:18.12.1 AS build
@@ -54,6 +80,11 @@ CMD ["npm", "start"]
 
 # # Start the application
 # CMD ["npm", "run", "start", "--", "--host"]
+
+
+
+
+
 
 
 
