@@ -1,5 +1,3 @@
-image: node:18.12.1
-
 pipelines:
   default:
     - step:
@@ -16,12 +14,13 @@ pipelines:
           - pipe: atlassian/heroku-deploy:2.0.0
             variables:
               HEROKU_API_KEY: $HEROKU_API_KEY
-              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              HEROKU_REACT_APP_NAME: $HEROKU_REACT_ APP_NAME
               ZIP_FILE: "application.tar.gz"
           - rm application.tar.gz
         artifacts:
           - node_modules/**
           - build/**
+
 
 
 
