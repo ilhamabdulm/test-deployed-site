@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "vite"
   },
   "dependencies": {
     "@floating-ui/core": "^1.1.0",

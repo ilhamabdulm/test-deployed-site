@@ -19,7 +19,7 @@ function getHeaders() {
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const api = axios.create({
-  baseURL: 'https://carbon-neutralize.herokuapp.com',
+  baseURL: 'https://api.carbon-neutralize.com',
 });
 
 export { getHeaders, api };

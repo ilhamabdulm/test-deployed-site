@@ -1,40 +1,67 @@
-image: node:18.7.0
-clone:
-  depth: full
+image: node:18.12.1
+
 pipelines:
   default:
     - step:
+        name: Build and deploy to Heroku
         caches:
           - node
-        script: 
-          # This gets executed on every push by a developer
-          - npm i
-          - npm test
-  branches:
-    master:
-      - step:
-          name: Test App
-          caches:
-            - node
-          script:
-            - rm -rf package-lock.json
-            - rm -rf node_modules
-            - npm ci
-      - step:
-          name: Create artifact
-          script: 
-             - git archive --format=tar.gz master -o application.tar.gz 
-          artifacts: 
-           - application.tar.gz
-      - step:
-          name: Deploy to heroku
-          deployment: production
-          caches:
-             - node
-          script:
-             - pipe: atlassian/heroku-deploy:2.0.0
-               variables:
-                 HEROKU_API_KEY: $HEROKU_API_KEY
-                 HEROKU_APP_NAME: $HEROKU_APP_NAME
-                 ZIP_FILE: "application.tar.gz"
-                 WAIT: 'true'
+        script:
+          - npm install
+          - npm run build
+          - echo "web: npm run start" > Procfile
+          - git add .
+          - git commit -m "Add Procfile for Heroku deployment"
+          - git archive --format=tar.gz HEAD > application.tar.gz
+          - pipe: atlassian/heroku-deploy:2.0.0
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              ZIP_FILE: "application.tar.gz"
+          - rm application.tar.gz
+        artifacts:
+          - node_modules/**
+          - build/**
+
+
+
+# image: node:18.7.0
+# clone:
+#   depth: full
+# pipelines:
+#   default:
+#     - step:
+#         caches:
+#           - node
+#         script: 
+#           # This gets executed on every push by a developer
+#           - npm i
+#           - npm test
+#   branches:
+#     master:
+#       - step:
+#           name: Test App
+#           caches:
+#             - node
+#           script:
+#             - rm -rf package-lock.json
+#             - rm -rf node_modules
+#             - npm ci
+#       - step:
+#           name: Create artifact
+#           script: 
+#              - git archive --format=tar.gz master -o application.tar.gz 
+#           artifacts: 
+#            - application.tar.gz
+#       - step:
+#           name: Deploy to heroku
+#           deployment: production
+#           caches:
+#              - node
+#           script:
+#              - pipe: atlassian/heroku-deploy:2.0.0
+#                variables:
+#                  HEROKU_API_KEY: $HEROKU_API_KEY
+#                  HEROKU_APP_NAME: $HEROKU_APP_NAME
+#                  ZIP_FILE: "application.tar.gz"
+#                  WAIT: 'true'
